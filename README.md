@@ -19,6 +19,8 @@
     * [Architecture](#architecture)
     * [Data View](#data-view)
     * [QR Code Storage](#qr-code-storage)
+    * [Organisation Endpoints](#organisation-endpoints)
+* [Status Logic](#status-logic)
 #### [Sequence Diagrams](#sequence-diagrams)
 * [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
 * [User Adds Test Results](#user-adds-test-results)
@@ -110,9 +112,22 @@ Therefore, this changes the expectations on the app as the app now needs to know
 * The URL to check-in
 * The URL to check-out
 
-### Organisation endpoints
+### Organisation Endpoints
 
 Please see the end point documentation here. 
+
+## Status Logic
+**Green**
+This status is the default status for the users of the application. An individual with this status has not recently been tested positive for the COVID-19 virus or has recently tested negative or  has successfully recovered. 
+
+**Red**
+Anyone who has indicated that they have recently tested positive for the COVID-19 virus.
+
+**Blue** 
+The individual is an essential worker.
+
+**Amber**
+This is currently being ignored but will remain in the BE as it may be brought back in the future.
 
 ---
 
@@ -152,10 +167,31 @@ Below is the sequence diagram for this process:
 </div>
 
 ## User Check Out
+Prior to this sprint, verifiers would simply “subtract” from the balance. This would not issue a credential which would enable us to detect the times between which a user has been in a particular location. This will be important when it comes to contact tracing. The differences to check in are:
+* Record added to the database is negative
+* No need to check status first
+
+<div align="center">
+    <img src="./imgs/UserCheckOut.png">
+</div>
+
+Below is the sequence diagram for this process:
+<div align="center">
+    <img src="./imgs/AddCheckOut.png">
+</div>
 
 ## User Cancels Check In
+The status is checked, but the counter for that location is not updated.
+
+<div align="center">
+    <img src="./imgs/CheckCanceled.png">
+</div>
 
 ---
 
 # Going Forward
+The next sprint will involve three key aspects: 
 
+* **Trusted Execution Environment (TEE):** TEE’s are isolated areas in a device that is separate from the main operating system where applications and data can reside. Applications that sit within the TEE, such as Covi-ID, are referred to as trust applications. The key aspects of TEE’s are the guarantees of security, confidentiality and integrity in relation to sensitive information. The data of these trusted applications are cryptographically secured, stored and processed. 
+* **HSM and enclave encryption techniques:** This will provide an additional layer of security to the already secure structure which employs symmetric cryptography. 
+* **Streetcred Export:** Importing all previously created identities in Version 1.0 from Streetcred into the CoviID servers and database. 
