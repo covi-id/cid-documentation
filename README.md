@@ -71,7 +71,6 @@ Below is the data base laid out in relational tables.
     <img src="./imgs/DataBaseDesign.png">
 </div>
 
-Description needed @Delta
 <div align="center">
     <img src="./imgs/DataTypes.png">
 </div>
