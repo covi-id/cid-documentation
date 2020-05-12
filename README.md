@@ -7,7 +7,6 @@
 
 ---
 
-
 # Index
 
 #### [Version Two](#version-two)
@@ -28,6 +27,7 @@
 * [User Check Out](#user-check-out)
 * [User Cancels Check In](#user-cancels-check-in)
 #### [Going Forward](#going-forward)
+
 
 The implementation repositories can be found here:
 #### [> `API Core`](https://github.com/covi-id/cid-api-core) 
@@ -114,7 +114,7 @@ Therefore, this changes the expectations on the app as the app now needs to know
 
 ### Organisation Endpoints
 
-Please see the end point documentation here. 
+Please see the [end point documentation here](https://github.com/covi-id/cid-documentation/blob/master/end_points.md). 
 
 ## Status Logic
 **Green**

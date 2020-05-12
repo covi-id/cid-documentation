@@ -1,4 +1,14 @@
-[> Back to `README.md`]()
+<div align="center">
+    <img src="./imgs/logo-dark.png">
+</div>
+<h1>
+    End Point Documentation
+</h1>
+<h3>
+    Covi-ID is an open source risk management tool designed to protect privacy.
+</h3>
+
+---
 
 # Index
 #### [Organisation endpoints](#organisation-endpoints)
@@ -14,6 +24,8 @@
 ### [Add Test Results Endpoints](#add-test-results-endpoints)
 * [Add test result](#add-test-result)
 * [Get Wallet Status](#get-wallet-status)
+
+[> Back to `README.md`](https://github.com/covi-id/cid-documentation/blob/master/README.md)
 
 ---
 # Organisation endpoints
