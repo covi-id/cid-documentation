@@ -1,6 +1,6 @@
 
 <div align="center">
-    <img src="./../imgs/logo-dark.png">
+    <img src="./imgs/logo-dark.png">
 </div>
 <h3>
     Covi-ID is an open source risk management tool designed to protect privacy.
