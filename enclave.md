@@ -213,7 +213,7 @@ Method: `createWallet`
 	 "method": "createWallet",
 	 "result": { 
 		 "userPubKey":"{user_pub_key}",
-		 "encryptedData":"{user_pub_key}",
+		 "encryptedData":"{encrypted_data}",
 	 }
 }
 ```
@@ -526,7 +526,7 @@ Method: `addWalletLocationReceipt`
 	 "method": "addWalletLocationReceipt",
 	 "result": { 
 		 "userPubKey":"{user_pub_key}",
-		 "encryptedData":"{user_pub_key}",
+		 "encryptedData":"{encrypted_data}",
 	 }
 }
 ```
