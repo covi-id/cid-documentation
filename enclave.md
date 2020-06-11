@@ -109,6 +109,8 @@ In Ubuntu, you can start the system service as:
 sudo systemctl start pm2-${USER}
 ```
 
+*You would need to run this for the api-server and enclave.
+
 # Limitiations / Improvements
 
 # Endpoints
@@ -122,6 +124,11 @@ Please see [Simulation](../client/simluation.js) for examples of how to implemen
 ### **Get Signature**
 
 Request the enclaves signature for verification
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
 
 **Request**
 
@@ -145,6 +152,15 @@ Method name: `GetSignature`
 ### **Get New Encryption Key**
 
 Requests a public encryption from the enclave that will be used to encrypt/decrypt data for the next user request.
+
+**Request**
+
+Method name: `newTaskEncryptionKey`
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_ekey}
 
 **Parameters**
 
@@ -183,6 +199,11 @@ Encrypted Data Json Payload:
 **Request**
 
 Method name: `createWallet`
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
 
 **Parameters**
 
@@ -225,6 +246,11 @@ Get wallet endpoint
 Encrypted Data Json Payload:
 
  * `walletId`: String
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_restricted}
 
 **Request**
 
@@ -285,6 +311,11 @@ Encrypted Data Json Payload:
 
  * `walletId`: String
 
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_verifier}
+
 **Request**
 
 Method name: `getWalletStatus`
@@ -341,6 +372,11 @@ Encrypted Data Json Payload:
 
  * `walletId`: String
 
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
+
 **Request**
 
 Method name: `deleteWallet`
@@ -385,6 +421,11 @@ Generate a OTP for mobile verification for a wallet
 Encrypted Data Json Payload:
 
  * `walletId`: String
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
 
 **Request**
 
@@ -432,6 +473,11 @@ Encrypted Data Json Payload:
 
 * `walletId`: String
 * `otp`: String
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
 
 **Request**
 
@@ -481,6 +527,11 @@ Encrypted Data Json Payload:
 * `lng`: f64
 * `scan_type`: ScanType: (CheckIn, CheckOut, Denied)
 * `created_at`: String - Datetime: YYYY-MM-DDTHH:mm:ss
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
 
 **Request**
 
@@ -533,6 +584,220 @@ Method: `addWalletLocationReceipt`
 
 ### **Add Wallet Test Result**
 
+Adding test results to a users wallet.
+
+Encrypted Data Json Payload:
+
+* `test_type`: TestType,
+* `laboratory_status`: LaboratoryStatus,
+* `has_received_results`: bool,
+* `result_status`: ResultStatus,
+* `laboratory`: Laboratory,
+* `tested_at`: String,
+* `issued_at`: String,
+* `reference_number`: String,
+* `has_consent`: bool,
+* `permission_granted_at`: Option<String>,
+* `created_at`: String,
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
+
+**Request**
+
+Method name: `addWalletTestResult`
+
+**Parameters**
+
+* `encryptedData` (String) - encrypted data
+* `userPubKey` - (String) - 64-byte public key for Diffie-Hellman
+
+**Returns**
+
+* `status` (Integer) - `0` if the operation was successful
+
+```json
+{ 
+	"id": "3d6564b44e",
+	"type": "addWalletTestResult",
+	"result": {
+	 	"status": 0 
+	} 
+}
+```
+
+**Example**
+
+Encrypted data example
+
+```json
+{
+	"test_type": "",
+	"laboratory_status": "",
+	"has_received_results": 0,
+	"result_status": "",
+	"laboratory": "",
+	"tested_at": "",
+	"issued_at": "",
+	"reference_number": "",
+	"has_consent": "",
+	"permission_granted_at": "",
+	"created_at": ""
+}
+```
+
+Method: `addWalletTestResult`
+```json
+{
+	 "jsonrpc":"2.0",
+	 "id":1, 
+	 "method": "addWalletTestResult",
+	 "result": { 
+		 "userPubKey":"{user_pub_key}",
+		 "encryptedData":"{encrypted_data}",
+	 }
+}
+```
+
+### **Get Wallet Test Result**
+
+Get Wallet Test Results
+
+Encrypted Data Json Payload:
+
+ * `walletId`: String
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_restricted}
+
+**Request**
+
+Method name: `getWalletTestResult`
+
+**Parameters**
+
+* `encryptedData` (String) - encrypted data
+* `userPubKey` - (String) - 64-byte public key for Diffie-Hellman
+
+**Returns**
+
+* `status` (Integer) - `0` if the operation was successful
+* `encryptedOutput` returns a walletObject and needs to be decrypted to obtain the json object.
+  
+**Encrypted output**
+
+```json
+	{
+		"test_type": "",
+		"laboratory_status": "",
+		"has_received_results": 0,
+		"result_status": "",
+		"laboratory": "",
+		"tested_at": "",
+		"issued_at": "",
+		"reference_number": "",
+		"has_consent": "",
+		"permission_granted_at": "",
+		"created_at": ""
+	}
+```
+  
+**Successsful operation**
+
+```json
+    { 
+        "id": "4078a17e30",
+        "type": "getWalletTestResult",
+        "result": {
+			"status": 0,
+			"encryptedOutput":"{encrypted_data}",
+
+		}
+	}
+```
+
+**Failed operation**
+
+ ```json
+	{ 
+		"id": "da7d3d68ff",
+		"type": "getWalletTestResult",
+		"result": {
+			"status": -1,
+		}
+   }
+```
+
+## **Tracing Consent**
+
+The followng endpoint is used in the Tracing admin system, when a user uploads their postive rest results, a unqiue code is generated for consent `wallet: consent_code` and retuned to the user to keep. When the tracer recieves this code from the infected indviudal, they will login to a tracing admin and input the mobile number and consent code. This will trigger a decryption task of the location data and submisson task to safeplaces api.
+
+PlainText Json Payload:
+
+ * `mobileNumber`: String `Ex: 27735995564`
+ * `consent_code`: String `Ex: KJ28PH`
+
+**Request**
+
+Method name: `submitTracingConsent`
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_consent}
+
+**Payload**
+
+```json
+	{
+		"mobileNumber": "{mobile_number}",
+		"consent_code": "{consent_code}",
+	}
+```
+
+**Returns**
+
+* `status` (Integer) - `0` if the operation was successful
+  
+**Encrypted output**
+
+**Successsful operation**
+
+```json
+    { 
+        "id": "4078a17e30",
+        "type": "submitTracingConsent",
+        "result": {
+			"status": 0,
+		}
+	}
+```
+**Failed operation**
+
+ ```json
+	{ 
+		"id": "da7d3d68ff",
+		"type": "submitTracingConsent",
+		"result": {
+			"status": -1,
+		}
+   }
+```
+
+
+# QR Construction
+
+```json
+{
+	"env": "dev",
+	"sig": "coviid.{enclaveSignature}",
+	"wId": "{uuiud}"
+}
+```
 
 # Data Specification
 
@@ -544,23 +809,25 @@ struct Wallet {
     details: WalletDetails,
     receipts: Vec<WalletLocationReceipt>,
     test_results: Vec<WalletTestResult>,
+	consent_code: String,
+	consent_at: String,
     created_at: String,
-    verified_at: String,
+    verified_at: String
 }
 
 struct WalletDetails {
     first_name: String,
     last_name: String,
     photo_reference: String,
-    mobile_number: String,
+	mobile_number: String,
 	hashed_mobile_number: String,
-    is_my_mobile_number: bool,
-	mobile_number_verified: bool
-    has_consent: bool,
+	is_my_mobile_number: bool,
+	mobile_number_verified: bool,
+	has_consent: bool
 }
 
 struct WalletOtp {
-    walletId: String,
+	walletId: String,
 	otp: String
 	limit: i32
 }
@@ -593,6 +860,7 @@ struct WalletTestResult {
     created_at: String,
 }
 ```
+
 ### **Enums**
 
 ```c
