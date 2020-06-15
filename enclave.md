@@ -28,8 +28,8 @@ The following is the public-facing interface for frontend/backend application to
 ### Stack
 
 * **Backend Application (RESTful API)**
-  * Framework: .NET Core 2.2 Web API
-  * ORM: EF Core (Entity Framework)
+  * Framework: .NET Core 3.1 Web API
+  * ORM: EF Core (Entity Framework) 
   * Error logging: Sentry
   * Email provider: Sendgrid
   * Sms provider: Clickatell
@@ -90,7 +90,7 @@ The code in this folder assumes that it will be run on the same server that runs
 For development or debugging purposes, this server can be run directly with:
 
 ```bash
-./index.js
+node ./index.js
 ```
 
 ## Production
@@ -98,12 +98,8 @@ For development or debugging purposes, this server can be run directly with:
 To put this server in production, one can use [pm2](https://pm2.keymetrics.io/docs/usage/startup/):
 
 ```bash
-npx pm2 startup
+npm run pm2-startup
 ```
-
-Then, simply copy/paste the line PM2 command gives you above and the startup script will be configured for your OS. 
-
-In Ubuntu, you can start the system service as:
 
 ```bash
 sudo systemctl start pm2-${USER}
@@ -132,7 +128,7 @@ Request the enclaves signature for verification
 
 **Request**
 
-Method name: `GetSignature`
+Method name: `getSignature`
 
 **Returns**
 
@@ -142,7 +138,7 @@ Method name: `GetSignature`
 ```json
 { 
 	"id": "",
-	"type": "GetSignature",
+	"type": "getSignature",
 	"result": {
 	 	"signature": "" 
 	} 
@@ -189,10 +185,9 @@ Encrypted Data Json Payload:
 * `first_name`: String
 * `last_name`: String
 * `photo_reference`: String: base64
-* `mobile_number`: String
+* `mobile_number`: String {country_code}{mobile_number} Ex: 27735995564
 * `hashed_mobile_number`: String - SHA256(mobile_number)
 * `is_my_mobile_number`: bool
-* `mobile_number_verified`: bool
 * `has_consent`: bool
 * `created_at`: String - Datetime: YYYY-MM-DDTHH:mm:ss
 
@@ -414,7 +409,59 @@ Method name: `deleteWallet`
    }
 ```
 
-### **Mobile Verification**
+### **Confirm Mobile Verification**
+
+Confirm OTP sent to mobile number related to a wallet
+
+Encrypted Data Json Payload:
+
+* `otp`: String
+
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_request_general}
+
+**Request**
+
+Method name: `mobileConfirm`
+
+**Parameters**
+
+* `userPubKey` - (String) - 64-byte public key for Diffie-Hellman
+* `encryptedData` (String) - encrypted data
+* `encryptedUserId` - (String) - 64-byte public key for Diffie-Hellman
+
+**Returns**
+
+* `status` (Integer) - `0` if the operation was successful
+  
+**Successsful Operation**
+
+```json
+    { 
+        "id": "4078a17e30",
+        "type": "confirmWalletMobileOtp",
+        "result": {
+			"status": 0,
+			"limt": 3,
+		}
+	}
+```
+
+**Failed Operation**
+
+ ```json
+	{ 
+		"id": "da7d3d68ff",
+		"type": "confirmWalletMobileOtp",
+		"result": {
+			"status": -1,
+		}
+   }
+```
+
+### **Mobile Verification (Resend)**
 
 Generate a OTP for mobile verification for a wallet
 
@@ -459,58 +506,6 @@ Method name: `getWalletMobileOtp`
 	{ 
 		"id": "da7d3d68ff",
 		"type": "getWalletMobileOtp",
-		"result": {
-			"status": -1,
-		}
-   }
-```
-
-### **Confirm Mobile Verification**
-
-Confirm OTP sent to mobile number related to a wallet
-
-Encrypted Data Json Payload:
-
-* `walletId`: String
-* `otp`: String
-
-**Headers**
-
-* `Content-Type`: application/json
-* `X-API-Key` {x_api_key_request_general}
-
-**Request**
-
-Method name: `confirmWalletMobileOtp`
-
-**Parameters**
-
-* `encryptedData` (String) - encrypted data
-* `userPubKey` - (String) - 64-byte public key for Diffie-Hellman
-
-**Returns**
-
-* `status` (Integer) - `0` if the operation was successful
-  
-**Successsful Operation**
-
-```json
-    { 
-        "id": "4078a17e30",
-        "type": "confirmWalletMobileOtp",
-        "result": {
-			"status": 0,
-			"limt": 3,
-		}
-	}
-```
-
-**Failed Operation**
-
- ```json
-	{ 
-		"id": "da7d3d68ff",
-		"type": "confirmWalletMobileOtp",
 		"result": {
 			"status": -1,
 		}
@@ -787,7 +782,18 @@ Method name: `submitTracingConsent`
 		}
    }
 ```
+# Endpoint Auth
 
+**Headers**
+
+* `Content-Type`: application/json
+* `X-API-Key` {x_api_key_consent}
+
+**Types**
+
+* x_api_key_consent
+* x_api_key_request_restricted
+* x_api_key_request_general
 
 # QR Construction
 
