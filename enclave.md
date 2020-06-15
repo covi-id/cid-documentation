@@ -441,7 +441,7 @@ Method name: `mobileConfirm`
 ```json
     { 
         "id": "4078a17e30",
-        "type": "confirmWalletMobileOtp",
+        "type": "mobileConfirm",
         "result": {
 			"status": 0,
 			"limt": 3,
@@ -454,7 +454,7 @@ Method name: `mobileConfirm`
  ```json
 	{ 
 		"id": "da7d3d68ff",
-		"type": "confirmWalletMobileOtp",
+		"type": "mobileConfirm",
 		"result": {
 			"status": -1,
 		}
@@ -465,10 +465,6 @@ Method name: `mobileConfirm`
 
 Generate a OTP for mobile verification for a wallet
 
-Encrypted Data Json Payload:
-
- * `walletId`: String
-
 **Headers**
 
 * `Content-Type`: application/json
@@ -476,12 +472,13 @@ Encrypted Data Json Payload:
 
 **Request**
 
-Method name: `getWalletMobileOtp`
+Method name: `mobileVerify`
 
 **Parameters**
 
-* `encryptedData` (String) - encrypted data
 * `userPubKey` - (String) - 64-byte public key for Diffie-Hellman
+* `encryptedUserId` - (String) - 64-byte public key for Diffie-Hellman
+* `mobileNumber` - (String) Ex 27734995587 {countrycode}{mobileNumber}
 
 **Returns**
 
@@ -492,7 +489,7 @@ Method name: `getWalletMobileOtp`
 ```json
     { 
         "id": "4078a17e30",
-        "type": "getWalletMobileOtp",
+        "type": "mobileVerify",
         "result": {
 			"status": 0,
 			"limt": 3,
@@ -505,7 +502,7 @@ Method name: `getWalletMobileOtp`
  ```json
 	{ 
 		"id": "da7d3d68ff",
-		"type": "getWalletMobileOtp",
+		"type": "mobileVerify",
 		"result": {
 			"status": -1,
 		}
