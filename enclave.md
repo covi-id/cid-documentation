@@ -747,13 +747,20 @@ Method name: `submitTracingConsent`
 ```json
 	{
 		"mobileNumber": "{mobile_number}",
-		"consent_code": "{consent_code}",
+		"consenCcode": "{consent_code}",
 	}
 ```
 
 **Returns**
 
 * `status` (Integer) - `0` if the operation was successful
+
+**Example**
+
+```
+curl -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1, "method": "submitTracingConsent","params": { "mobileNumber":"27843251502","consentCode":"TtGbX0dp"}}' http://13.82.53.99:8080
+```
+---
   
 **Encrypted output**
 
