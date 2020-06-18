@@ -9,9 +9,6 @@
 </h3>
 
 ---
-
-
----
 ## Frontend
 
 - Hosted on AWS S3 Static Site
