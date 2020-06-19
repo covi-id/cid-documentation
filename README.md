@@ -99,56 +99,6 @@ The system is designed to protect the privacy of users who contribute location c
 
 ---
 
-## Sequence Diagrams
-
-Keys:
-
-* sK: Secret Key. Encrypts user data in a way we can’t access.
-* aK: Application Key. Encrypts mobile number and sK in a way that the server can decrypt.
-
-### User Generates non SSI Wallet
-
-Below is the sequence diagram for this a user creating a wallet:
-
-<div align="center">
-    <img src="./imgs/UserGenerateWallet.png">
-</div>
-
-### User Adds Test Results
-
-* A user can attest to test results. In order to do this, they need to provide their secret key.
-* If a user has tested positive, send their location data to SafePlaces
-
-<div align="center">
-    <img src="./imgs/AddTestResults.png">
-</div>
-
-### User Check In
-
-Below is the sequence diagram for a user checking in to an organisation:
-
-<div align="center">
-    <img src="./imgs/AddCheckIn.png">
-</div>
-
-### User Check Out
-
-Below is the sequence diagram for a user checking out of an organisation:
-
-<div align="center">
-    <img src="./imgs/AddCheckOut.png">
-</div>
-
-### User Cancels Check In
-
-The status is checked, but the counter for that location is not updated. The canceled entry is still recorded.
-
-<div align="center">
-    <img src="./imgs/CheckCanceled.png">
-</div>
-
----
-
 # Going Forward
 The next version Covi-ID platform has been built to include a secure enclave implementation that acts as a Trusted Execution Environment (TEE). Details around this implementation can be found [here](https://github.com/covi-id/cid-documentation/blob/master/enclave.md).
 
