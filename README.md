@@ -9,32 +9,32 @@
 
 # Index
 
-#### [Version Two](#version-two)
-* [Version Two Features and Changes](#version-two-features-and-changes)
-* [Migration](#migration)
-#### [How Covi ID works](#how-covi-id-works)
-* [DevOps](#devops)
-    * [Database Design](#database-design)
-    * [Architecture](#architecture)
-    * [Data View](#data-view)
-    * [QR Code Storage](#qr-code-storage)
-    * [Organisation Endpoints](#organisation-endpoints)
-* [Status Logic](#status-logic)
-#### [Sequence Diagrams](#sequence-diagrams)
-* [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
-* [User Adds Test Results](#user-adds-test-results)
-* [User Check In](#user-check-in)
-* [User Check Out](#user-check-out)
-* [User Cancels Check In](#user-cancels-check-in)
+#### [Introduction](#Introduction-two)
+* [Problem](#Problem)
+* [Solution](#Solution)
+* [Composition](#Composition)
+* [Benefits](#Benefits-of-Covi-ID)
+
+#### [Functionality Overview](#Functionality-Overview)
+* [Overview](#Overview)
+* [Data Flow](#Data-Flow)
+* [Sequence Diagrams](#sequence-diagrams)
+    * [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
+    * [User Adds Test Results](#user-adds-test-results)
+    * [User Check In](#user-check-in)
+    * [User Check Out](#user-check-out)
+    * [User Cancels Check In](#user-cancels-check-in)
+
 #### [Going Forward](#going-forward)
 
-
 The implementation repositories can be found here:
+
 #### [> `API Core`](https://github.com/covi-id/cid-api-core) 
 #### [> `Web App`](https://github.com/covi-id/cid-web-app)
 #### [> `Mobile App`](https://github.com/covi-id/cid-mob-app)
 
 Additional documentation
+
 #### [> `End Points Documentation`](https://github.com/covi-id/cid-documentation/blob/master/end_points.md)
 
 ---
@@ -43,108 +43,79 @@ Additional documentation
     <img src="./imgs/logo-dark.png">
 </div>
 
-# Version Two
+# Introduction
 
-## Version Two Features and Changes
+## Problem
 
-* The system architecture will be modified so that the user identities (Wallet ID’s) created and their associated data will be stored in the Covi ID servers and database (existing user information on StreetCred will need to be imported into Covi ID servers accordingly - this will occur in the next sprint).
-    * The generation of the UUID occurs when the Covi ID (Wallet ID) is written to the database as the database possesses built-in capabilities to generate the UUID when writing new records to the table. 
-* User identities will now be created with the generation of a secret key. Symmetric cryptography was employed. Advanced Encryption Standard was used. 
-* Privacy-preserving techniques are employed to protect user data. User data will be stored in an encrypted manner using the secret key.
-* This key is stored in the users QR Code along with their Wallet ID.
-* User data cannot be decrypted without the secret key and even when decrypted, this is only done in a raw state of transit and this key is never stored by Covi ID’s servers. The state of transit is required for the Covi ID API to pull the users status and return it to the verifier. 
- 
-It is important to note that despite moving away from the StreetCred SSI management system, the concept of SSI still remains as encryption techniques have been employed. 
+As countries attempt to kickstart their economy in the wake of the COVID-19 crisis, it is vital that efficient measures are in place to contain future outbreaks of the virus. Businesses are looking for ways to protect their employees and customers, and to enable disease surveillance, ultimately preventing the spread of infection.
 
-## Migration
+Businesses currently struggle with:
 
-It has been determined that the existing code-base from Covi-ID Version 1.0 will be modified and adjusted accordingly. A new code base was not created. 
+* Fulfilling corporate responsibilities to protect their employees and staff.
+* Implementing efficient track and trace solutions, which are often time consuming and costly.
 
-In terms of the encryption, the code relating to it will be segmented within the code-base making any modification to any encryption aspects easily accessible without upsetting the entire code structure. To begin with, all data will be encrypted at a base level.
+## Solution
 
----
+Covi-ID offers an easy-to-use mobile verifier app that provides businesses with a simple, and free way to fulfil their responsibility to society during COVID times. This takes the shape of a simple system that can:
 
-# How Covi ID Works
+* Enable contact tracing by capturing “check-ins” and “check-outs” related to an organisation's geolocation.
+* By partnering with third parties such as SafePlaces, customers/employees can be notified if they have been exposed to a confirmed COVID-19 case, giving them extra peace of mind without creating additional cost for the business.
 
-## DevOps
+## Composition
 
-### Database Design
-Below is the data base laid out in relational tables. 
-<div align="center">
-    <img src="./imgs/DataBaseDesign.png">
-</div>
+The Covi-ID solution is made up of two components:
 
-<div align="center">
-    <img src="./imgs/DataTypes.png">
-</div>
+* Covi-ID Web application (platform) - provides the ability for users to easily generate their personal Covi-ID which acts as their personal data wallet.
+* Covi-ID Mobile app - enables organisations to monitor the flow of individuals on their premises and enable a contact tracing mechanism for their employees and clients. Currently only available on Android, iStore distribution pending review. 
 
-### Architecture
-Below is the architecture diagram of the Coiv ID system. 
-<div align="center">
-    <img src="./imgs/Architecture.png">
-</div>
+## Benefits of Covi-ID
 
-### Data View
-Who can see the data in plain text and when
-<div align="center">
-    <img src="./imgs/DataView.png">
-</div>
-
-### QR Code Storage
-The user’s identity and their secret key are stored within their QR Code. Additionally, a reference to the user’s picture is stored. This reference is then encrypted by S3 and given a limited time access URL where the picture can be accessed for 3 minutes. This reference is in the form of a GUID so no reference to the users identity is made in the filename. 
-
-The user’s secret key is generated by using a random byte array provided by the RNGCryptoServicProvider. This secret key is then encrypted using the ServerKey.  To better understand the process, please see the flow below:
-
-* The user will go to the web platform
-* The user will enter their details and submit them.
-* A wallet is created for the user with the users mobile number attached to it.
-* An OTP is generated and sent to the user.
-* OTP is linked to the Wallet via a token (until verified and returned)
-* User enters their OTP and submits
-* The OTP token is now in the header of the request and the request and the rest of the user details (firstname, lastname, etc) are in the body of the request.
-* OTP gets verified
-* Secret key for the user is created (WalletID + Covi ID Server Secret Key = User Secret Key)
-* Details from the request are encrypted by the user’s secret key.
-* Wallet and Secret key are returned to the user.
-* Wallet and Secret key are encoded into a QR Code. 
-
-Therefore, this changes the expectations on the app as the app now needs to know how to construct. 
-
-* The URL to check the COVID-19 health status for that user
-* The URL to check-in
-* The URL to check-out
-
-### Organisation Endpoints
-
-Please see the [end point documentation here](https://github.com/covi-id/cid-documentation/blob/master/end_points.md). 
-
-## Status Logic
-**Green**
-This status is the default status for the users of the application. An individual with this status has not recently been tested positive for the COVID-19 virus or has recently tested negative or  has successfully recovered. 
-
-**Red**
-Anyone who has indicated that they have recently tested positive for the COVID-19 virus.
-
-**Blue** 
-The individual is an essential worker.
-
-**Amber**
-This is currently being ignored but will remain in the BE as it may be brought back in the future.
+* Individuals can easily generate QR codes from the Covi-ID web application.
+* Verifiers can scan an individual's QR code using the Covi-ID verifier app to “check-in” or “check-out” of their premises.
+* Whenever a verifier scans the QR code of an individual, the verifier leaves a token with a geolocation and time stamp in the individual’s personal data wallet.
+* Covi-ID uses the latest privacy-preserving technology to support manual track and trace solutions.
+* Individuals who test positive for COVID-19 can volunteer to submit their data to the SafePlaces application, which creates a real-time map of COVID-19 hotspots across South Africa.
 
 ---
 
-# Sequence Diagrams
+# Functionality
 
-Key:
-sK: Secret Key. Encrypts user data in a way we can’t access.
-aK: Application Key. Encrypts mobile number and sK in a way that the server can decrypt.
+## Overview
 
-## User Generates non SSI Wallet
+The Covi-ID solution offers several functionalities:
+
+* **Managing access to an organisation's premises**: The mobile app is used by a security guard or individual managing access to an organisation’s premises. On entering a premises, an individual presents their pre-generated Covi-ID QR code to the verifier. Using the mobile app, the verifier scans the QR code and checks the individual in. On exiting the building, the verifier again scans the individuals QR code and checks the individual out.
+
+* **COVID-19 location tracking:** On scanning an individual's QR code and checking them into or out of the organisation's premises, the verifier’s geolocation receipt (shared from the mobile app) is stored in the individual’s Covi-ID wallet. The latest geolocation receipt is stored along with all others from other Covi-ID establishments that the individual has visited over the past 14 days. This wallet is only accessible by the individual through the use of their unique QR code. 
+
+* **Update COVID-19 status:** Should an individual test positive for COVID-19, their status can be updated on the Covi-ID server. The individual uploads their QR code via the Web Platform to access their Covi-ID wallet. The individual is then able to enter the details of their test, including the test reference number, laboratory through which the test was conducted, and test date. The individual can volunteer to submit their anonymous geolocation receipts to Safe Places. Once the data is submitted to the Safe Places server, it contributes to a real-time map of COVID-19 hotspots.
+
+* **Accessible for users without a mobile phone:** In the case that an individual does not have access to their own computer or smartphone, a family member, friend or affiliated organisation can generate a Covi-ID on their behalf by following the standard setup process using the individuals personal details, but by adding the mobile number of a close relative or friend. The generated QR code can be printed out for later use.
+
+
+## Data Flow
+
+The system is designed to protect the privacy of users who contribute location check in data. The core privacy preserving capabilities are enabled by the use of a Trusted Execution Environment (TEE), which encrypts data using a private-public keypair, in both transit and at rest This enables the Covi-ID system to render the database operator unable to read the database contents, a core requirement of returning true data ownership and privacy back to the data owner.
+
+---
+
+## Sequence Diagrams
+
+Keys:
+
+* sK: Secret Key. Encrypts user data in a way we can’t access.
+* aK: Application Key. Encrypts mobile number and sK in a way that the server can decrypt.
+
+### User Generates non SSI Wallet
+
+Below is the sequence diagram for this a user creating a wallet:
+
 <div align="center">
     <img src="./imgs/UserGenerateWallet.png">
 </div>
 
-## User Adds Test Results
+### User Adds Test Results
+
 * A user can attest to test results. In order to do this, they need to provide their secret key.
 * If a user has tested positive, send their location data to SafePlaces
 
@@ -152,38 +123,25 @@ aK: Application Key. Encrypts mobile number and sK in a way that the server can 
     <img src="./imgs/AddTestResults.png">
 </div>
 
-## User Check In
-* The user currently is “checked in” to the organisation and is “counted” regardless of whether the verifier actually indicates that the user has been allowed to enter based on the status returned. We need to split the “status check” and the “add check in” logic as the verifier may reject the entrance of a user. Currently, it “checks everyone in” regardless. 
-* The app will need to be amended to allow for this split in functionality. So after scanning, the verifier needs to be able to confirm or deny entry. 
-* If the user is not approved for entry, we still need a record of them being there. 
-* Need to add logic to check if that PK has entered the building that day, if they have can only check out - check-in button disabled 
-Response must return counter 
+### User Check In
 
-<div align="center">
-    <img src="./imgs/UserCheckIn.png">
-</div>
+Below is the sequence diagram for a user checking in to an organisation:
 
-Below is the sequence diagram for this process:
 <div align="center">
     <img src="./imgs/AddCheckIn.png">
 </div>
 
-## User Check Out
-Prior to this sprint, verifiers would simply “subtract” from the balance. This would not issue a credential which would enable us to detect the times between which a user has been in a particular location. This will be important when it comes to contact tracing. The differences to check in are:
-* Record added to the database is negative
-* No need to check status first
+### User Check Out
 
-<div align="center">
-    <img src="./imgs/UserCheckOut.png">
-</div>
+Below is the sequence diagram for a user checking out of an organisation:
 
-Below is the sequence diagram for this process:
 <div align="center">
     <img src="./imgs/AddCheckOut.png">
 </div>
 
-## User Cancels Check In
-The status is checked, but the counter for that location is not updated.
+### User Cancels Check In
+
+The status is checked, but the counter for that location is not updated. The canceled entry is still recorded.
 
 <div align="center">
     <img src="./imgs/CheckCanceled.png">
@@ -192,8 +150,6 @@ The status is checked, but the counter for that location is not updated.
 ---
 
 # Going Forward
-The next sprint will involve three key aspects: 
+The next version Covi-ID platform has been built to include a secure enclave implementation that acts as a Trusted Execution Environment (TEE). Details around this implementation can be found [here](https://github.com/covi-id/cid-documentation/blob/master/enclave.md).
 
-* **Trusted Execution Environment (TEE):** TEE’s are isolated areas in a device that is separate from the main operating system where applications and data can reside. Applications that sit within the TEE, such as Covi ID, are referred to as trust applications. The key aspects of TEE’s are the guarantees of security, confidentiality and integrity in relation to sensitive information. The data of these trusted applications are cryptographically secured, stored and processed. 
-* **HSM and enclave encryption techniques:** This will provide an additional layer of security to the already secure structure which employs symmetric cryptography. 
-* **Streetcred Export:** Importing all previously created identities in Version 1.0 from Streetcred into the Covi ID servers and database. 
+The current version of the Covi-ID platform will thus be deprecated but details regarding this implementation can be found [here](https://github.com/covi-id/cid-documentation/blob/master/coviid_api.md).
