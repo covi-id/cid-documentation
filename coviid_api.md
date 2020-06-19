@@ -8,15 +8,16 @@
     Covi-ID is an open source risk management tool designed to protect privacy.
 </h3>
 
+The following document contains details about the REST API that is hosted on AWS. The code for this API can be found [here](https://github.com/covi-id/cid-api-core)
+
 ---
 
 # Index
-### [Database Design](#database-design)
 
-### [Restfull Endpoints](#restfull-endpoints)
-
-### [Annexture](#annexture)
-* [Database Design Source](#database-design-source)
+* [Database Design](#database-design)
+* [Endpoints](#End-points)
+* [Annexture](#annexture)
+  * [Database Design Source](#database-design-source)
 
 ---
 ## Database Design
@@ -25,12 +26,8 @@
     <img src="./imgs/Coviid-API-Database-Design.PNG">
 </div>
 
+The source code for the database design can be seen below. This source code can be used with an app like [Dbdiagrams](https://dbdiagrams.io).
 
-## Restfull Endpoints 
-A complete file to all the available endpoints [here](https://github.com/covi-id/cid-documentation/blob/master/end_points.md#add-test-result)
-
-## Annexture
-### Database Design Source
 ```
 table OtpTokens
 {
@@ -149,6 +146,6 @@ enum TestType
 ```
 
 
+## End-points 
 
-
-
+The end-points for this API are implemented in a RESTful standard and a detailed file can be found [here](https://github.com/covi-id/cid-documentation/blob/master/end_points.md).
