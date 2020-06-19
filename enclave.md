@@ -28,7 +28,7 @@ The following is the public-facing interface for frontend/backend application to
 ### Stack
 
 * **Backend Application (RESTful API)**
-  * Framework: .NET Core 3.1 Web API
+  * Framework: .NET Core 2.1 Web API
   * ORM: EF Core (Entity Framework) 
   * Error logging: Sentry
   * Email provider: Sendgrid
