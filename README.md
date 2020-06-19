@@ -16,6 +16,7 @@
 * [Benefits](#Benefits-of-Covi-ID)
 
 #### [Functionality Overview](#Functionality-Overview)
+* [Overview](#Overview)
 * [Data Flow](#Data-Flow)
 * [Sequence Diagrams](#sequence-diagrams)
     * [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
@@ -74,8 +75,6 @@ The Covi-ID solution is made up of two components:
 * Whenever a verifier scans the QR code of an individual, the verifier leaves a token with a geolocation and time stamp in the individual’s personal data wallet.
 * Covi-ID uses the latest privacy-preserving technology to support manual track and trace solutions.
 * Individuals who test positive for COVID-19 can volunteer to submit their data to the SafePlaces application, which creates a real-time map of COVID-19 hotspots across South Africa.
-
-## Data
 
 ---
 
