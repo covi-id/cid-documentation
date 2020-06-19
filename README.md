@@ -18,7 +18,7 @@
     * [Architecture](#architecture)
     * [Data View](#data-view)
     * [QR Code Storage](#qr-code-storage)
-    * [Organisation Endpoints](#organisation-endpoints)
+    * [API Endpoints](#api-endpoints)
 * [Status Logic](#status-logic)
 #### [Sequence Diagrams](#sequence-diagrams)
 * [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
@@ -114,9 +114,9 @@ Therefore, this changes the expectations on the app as the app now needs to know
 * The URL to check-in
 * The URL to check-out
 
-### Organisation Endpoints
+### API Endpoints
 
-Please see the [end point documentation here](https://github.com/covi-id/cid-documentation/blob/master/end_points.md). 
+Please see the [end point documentation here](https://documenter.getpostman.com/view/10572269/Szzn5vum?version=latest). 
 
 ## Status Logic
 **Green**
