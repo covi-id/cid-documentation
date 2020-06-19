@@ -94,9 +94,9 @@ The Covi-ID solution offers several functionalities:
 
 
 ## Data Flow
+
 The system is designed to protect the privacy of users who contribute location check in data. The core privacy preserving capabilities are enabled by the use of a Trusted Execution Environment (TEE), which encrypts data using a private-public keypair, in both transit and at rest This enables the Covi-ID system to render the database operator unable to read the database contents, a core requirement of returning true data ownership and privacy back to the data owner.
 
-This privacy preserving TEE architecture forms the core of all data flows within the system, as detailed below.
 ---
 
 ## Sequence Diagrams
@@ -107,6 +107,8 @@ Keys:
 * aK: Application Key. Encrypts mobile number and sK in a way that the server can decrypt.
 
 ### User Generates non SSI Wallet
+
+Below is the sequence diagram for this a user creating a wallet:
 
 <div align="center">
     <img src="./imgs/UserGenerateWallet.png">
@@ -123,20 +125,23 @@ Keys:
 
 ### User Check In
 
-Below is the sequence diagram for this process:
+Below is the sequence diagram for a user checking in to an organisation:
+
 <div align="center">
     <img src="./imgs/AddCheckIn.png">
 </div>
 
 ### User Check Out
 
-Below is the sequence diagram for this process:
+Below is the sequence diagram for a user checking out of an organisation:
+
 <div align="center">
     <img src="./imgs/AddCheckOut.png">
 </div>
 
 ### User Cancels Check In
-The status is checked, but the counter for that location is not updated.
+
+The status is checked, but the counter for that location is not updated. The canceled entry is still recorded.
 
 <div align="center">
     <img src="./imgs/CheckCanceled.png">
