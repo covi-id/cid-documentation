@@ -359,56 +359,6 @@ Method name: `getWalletStatus`
    }
 ```
 
-### **Delete Wallet**
-
-Delete wallet endpoint
-
-Encrypted Data Json Payload:
-
- * `walletId`: String
-
-**Headers**
-
-* `Content-Type`: application/json
-* `X-API-Key` {x_api_key_request_general}
-
-**Request**
-
-Method name: `deleteWallet`
-
-**Parameters**
-
-* `encryptedData` (String) - encrypted data
-* `userPubKey` - (String) - 64-byte public key for Diffie-Hellman
-
-**Returns**
-
-* `status` (Integer) - `0` if the operation was successful
-  
-**Successsful Operation**
-
-```json
-    { 
-        "id": "4078a17e30",
-        "type": "deleteWallet",
-        "result": {
-			"status": 0,
-		}
-	}
-```
-
-**Failed Operation**
-
- ```json
-	{ 
-		"id": "da7d3d68ff",
-		"type": "deleteWallet",
-		"result": {
-			"status": -1,
-		}
-   }
-```
-
 ### **Confirm Mobile Verification**
 
 Confirm OTP sent to mobile number related to a wallet
