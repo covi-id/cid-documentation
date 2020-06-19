@@ -97,22 +97,23 @@ The Covi-ID solution offers several functionalities:
 The system is designed to protect the privacy of users who contribute location check in data. The core privacy preserving capabilities are enabled by the use of a Trusted Execution Environment (TEE), which encrypts data using a private-public keypair, in both transit and at rest This enables the Covi-ID system to render the database operator unable to read the database contents, a core requirement of returning true data ownership and privacy back to the data owner.
 
 This privacy preserving TEE architecture forms the core of all data flows within the system, as detailed below.
-
-
 ---
 
 ## Sequence Diagrams
 
-Key:
-sK: Secret Key. Encrypts user data in a way we can’t access.
-aK: Application Key. Encrypts mobile number and sK in a way that the server can decrypt.
+Keys:
+
+* sK: Secret Key. Encrypts user data in a way we can’t access.
+* aK: Application Key. Encrypts mobile number and sK in a way that the server can decrypt.
 
 ### User Generates non SSI Wallet
+
 <div align="center">
     <img src="./imgs/UserGenerateWallet.png">
 </div>
 
 ### User Adds Test Results
+
 * A user can attest to test results. In order to do this, they need to provide their secret key.
 * If a user has tested positive, send their location data to SafePlaces
 
@@ -121,15 +122,6 @@ aK: Application Key. Encrypts mobile number and sK in a way that the server can 
 </div>
 
 ### User Check In
-* The user currently is “checked in” to the organisation and is “counted” regardless of whether the verifier actually indicates that the user has been allowed to enter based on the status returned. We need to split the “status check” and the “add check in” logic as the verifier may reject the entrance of a user. Currently, it “checks everyone in” regardless. 
-* The app will need to be amended to allow for this split in functionality. So after scanning, the verifier needs to be able to confirm or deny entry. 
-* If the user is not approved for entry, we still need a record of them being there. 
-* Need to add logic to check if that PK has entered the building that day, if they have can only check out - check-in button disabled 
-Response must return counter 
-
-<div align="center">
-    <img src="./imgs/UserCheckIn.png">
-</div>
 
 Below is the sequence diagram for this process:
 <div align="center">
@@ -137,13 +129,6 @@ Below is the sequence diagram for this process:
 </div>
 
 ### User Check Out
-Prior to this sprint, verifiers would simply “subtract” from the balance. This would not issue a credential which would enable us to detect the times between which a user has been in a particular location. This will be important when it comes to contact tracing. The differences to check in are:
-* Record added to the database is negative
-* No need to check status first
-
-<div align="center">
-    <img src="./imgs/UserCheckOut.png">
-</div>
 
 Below is the sequence diagram for this process:
 <div align="center">
