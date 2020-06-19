@@ -54,7 +54,7 @@ Payload:
 {
    "data": {
        "balance": 10,
-	   "total": 30
+	   "total": 30,
 	   "organisationName": "{organisation name}"
    },
    "meta": {
@@ -84,7 +84,7 @@ x-api-key: “{api key}”,
 {
    "data": {
        "balance": 10,
-	   "total": 30
+	   "total": 30,
 	   "organisationName": "{organisation name}"
    },
    "meta": {
@@ -114,7 +114,7 @@ x-api-key: “{api key}”,
 {
    "data": {
        "balance": 10,
-	   "total": 30
+	   "total": 30,
 	   "organisationName": "{organisation name}"
    },
    "meta": {
