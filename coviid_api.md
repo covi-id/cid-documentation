@@ -16,15 +16,13 @@
 ### [Restfull Endpoints](#restfull-endpoints)
 
 ### [Annexture](#annexture)
-* [Database Design Source ](#Database Design Source)
-
-[> Back to `README.md`](https://github.com/covi-id/cid-documentation/blob/master/README.md)
+* [Database Design Source](#Database Design Source)
 
 ---
 ## Database Design
 
 <div align="center">
-    <img src="./imgs/Coviid-API-Database-Design.png">
+    <img src="./imgs/Coviid-API-Database-Design.PNG">
 </div>
 
 
