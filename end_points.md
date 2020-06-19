@@ -53,7 +53,9 @@ Payload:
 ```
 {
    "data": {
-       "balance": 10
+       "balance": 10,
+	   "total": 30
+	   "organisationName": "{organisation name}"
    },
    "meta": {
        "success": true,
@@ -81,7 +83,9 @@ x-api-key: “{api key}”,
 ```
 {
    "data": {
-       "balance": 10
+       "balance": 10,
+	   "total": 30
+	   "organisationName": "{organisation name}"
    },
    "meta": {
        "success": true,
@@ -109,7 +113,9 @@ x-api-key: “{api key}”,
 ```
 {
    "data": {
-       "balance": 10
+       "balance": 10,
+	   "total": 30
+	   "organisationName": "{organisation name}"
    },
    "meta": {
        "success": true,
@@ -130,8 +136,8 @@ x-api-key: “{api key}”,
 **Payload:**
 ```
 {
-	“mobileNumber”: “27765408650”,
-	“mobileNumberReference: “0765408650”
+	“mobileNumber”: “{27765608650}”,
+	“mobileNumberReference: “{0766408650}”
 }
 ```
 **Response:**
@@ -168,16 +174,6 @@ Authorization: “{token from create wallet or from resend otp}”
         “firstName”: “{firstName}”, Max 50, min 2
         “lastName”: “{lastName}”, Max 50, min 2
         “photo”: “{base 64 photo}”
-        “IdType”:”{IdentificationDocument}” //Enum 
-        “IdValue”:”{Identification value}” Max 13, min 6
-    },
-    “testResult”:
-    {
-        “testedAt”: “{"0001-01-01}”,
-        “resultStatus”: “{Positive}”, //Enum
-        “Laboratory”: “{Lancey}”, //Enum
-        “referenceNumber”:” {123456AB}”,
-        “hasConsent”: true
     }
 }
 ```
@@ -196,27 +192,6 @@ Authorization: “{token from create wallet or from resend otp}”
 }
 ```
 
-## Enums
-```
-IdType
-    {
-        IdentificationDocument = 0,
-        Passport = 1
-    }
-ResultStatus
-    {
-        Untested = 0,
-        Negative = 1,
-        Positive = 2,
-    }
-Laboratory
-    {
-        NHLS = 0,
-        Lancet = 1,
-        Pathcare = 2,
-    }
-```
-
 ## Resend OTP
 **POST** [https://<our_server_URL>/api/auth/otp/resend](https://<our_server_URL>/api/auth/otp/resend)
 **Headers:**
@@ -227,7 +202,7 @@ Authorization: “{token from create wallet}”
 **Payload:**
 ```
 {
-	“mobileNumber”: “27765408650”
+	“mobileNumber”: “{27766408650}”
 }
 ```
 **Response:**
