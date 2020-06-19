@@ -15,11 +15,14 @@ The following document contains details about the REST API that is hosted on AWS
 # Index
 
 * [Data View](#Data-View)
-
   * [User Data](#User-Data)
   * [QR Code Data](#QR-Code-Data)
-
 * [Sequence Diagrams](#Sequence-Diagrams)
+  * [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
+  * [User Adds Test Results](#user-adds-test-results)
+  * [User Check In](#user-check-in)
+  * [User Check Out](#user-check-out)
+  * [User Cancels Check In](#user-cancels-check-in)
 * [Database Design](#Database-Design)
 * [Endpoints](#End-points)
 

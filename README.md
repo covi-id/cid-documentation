@@ -18,12 +18,6 @@
 #### [Functionality Overview](#Functionality-Overview)
 * [Overview](#Overview)
 * [Data Flow](#Data-Flow)
-* [Sequence Diagrams](#sequence-diagrams)
-    * [User Generates non SSI Wallet](#user-generates-non-ssi-wallet)
-    * [User Adds Test Results](#user-adds-test-results)
-    * [User Check In](#user-check-in)
-    * [User Check Out](#user-check-out)
-    * [User Cancels Check In](#user-cancels-check-in)
 
 #### [Going Forward](#going-forward)
 
