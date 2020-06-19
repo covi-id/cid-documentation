@@ -4,23 +4,33 @@
 <h1>
     End Point Documentation
 </h1>
+
 <h3>
     Covi-ID is an open source risk management tool designed to protect privacy.
 </h3>
 
 ---
 
+## Note
+
+These end points are for the Covi-ID core [API](https://github.com/covi-id/cid-api-core) that is set to be deprecated.
+
+
 # Index
+
 #### [Organisation endpoints](#organisation-endpoints)
 * [Get an organisation](#get-an-organisation)
 * [Check in of a user](#check-in-of-a-user)
 * [Check out of a user](#check-out-of-a-user)
 * [Access denied](#access-denied)
+
 #### [Wallet endpoints](#wallet-endpoints)
 * [Create wallet](#create-wallet)
+
 ### [OTP endpoints](#otp-endpoints)
 * [Confirm OTP](#confirm-otp)
 * [Resend OTP](#resend-otp)
+
 ### [Add Test Results Endpoints](#add-test-results-endpoints)
 * [Add test result](#add-test-result)
 * [Get Wallet Status](#get-wallet-status)
