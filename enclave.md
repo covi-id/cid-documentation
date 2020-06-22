@@ -10,7 +10,7 @@
 
 # Covi-ID JSON-RPC Backend
 
-The following is the public-facing interface for frontend/backend application to consume and interact with the sgx enclave
+The following is the public-facing interface for frontend/backend application to consume and interact with the SGX enclave
 
 ## Introduction
 
@@ -28,21 +28,15 @@ The following is the public-facing interface for frontend/backend application to
 ### Stack
 
 * **Backend Application (RESTful API)**
-  * Framework: .NET Core 2.1 Web API
-  * ORM: EF Core (Entity Framework) 
-  * Error logging: Sentry
-  * Email provider: Sendgrid
+  * Framework: Node
+  * ORM: File Storage - HashMap
   * Sms provider: Clickatell
-  * Authentication: JWT, RSA Keypairs
-  * Container: Docker
-  * Build Pipeline: AWS Code Deploy -> moving to azure pipelines
-  * Documentation: Swagger / Postman
+  * Authentication: X-api key, DH Rotational Keys
 
 * **Frontend Application (Client)**
   * Framework: ReactJS
   * State Management: Redux
   * Build Pipeline: AWS Code Deploy -> moving to azure pipelines
-  * Error logging: Sentry
 
 * **Enclave**
   * Framework: Rust
@@ -59,7 +53,7 @@ The following is the public-facing interface for frontend/backend application to
 
 ## Credits
 
-`We want to acknowledge and credit Enigma/SafeTrace from which this repostiory is forked ` 
+`We want to acknowledge and credit Enigma/SafeTrace from which this repository is forked ` 
 
 ....
 
@@ -100,12 +94,48 @@ To put this server in production, one can use [pm2](https://pm2.keymetrics.io/do
 ```bash
 npm run pm2-startup
 ```
+Then, simply copy/paste the line PM2 command gives you above and the startup script will be configured for your OS.
+In Ubuntu, you can start the system service as:
 
 ```bash
 sudo systemctl start pm2-${USER}
 ```
 
 *You would need to run this for the api-server and enclave.
+
+## Enclave
+
+### Requirements
+
+* A suitable computer system with SGX enabled in the BIOS.
+* Ubuntu Bionic 18.04 or newer.
+* Rust language support.
+
+### Installation
+
+1. Clone the repository.
+2. Install the SGX driver and the SDK.
+3 .Move into the enclave/safetrace subfolder.
+
+```bach
+cd enclave/safetrace
+```
+
+4. Compile the code.
+
+```bash
+make
+```
+
+5. Run the enclave code.
+
+```bash
+cd bin
+```
+
+```bash
+./safetrace-app
+```
 
 # Limitiations / Improvements
 
@@ -188,6 +218,7 @@ Encrypted Data Json Payload:
 * `mobile_number`: String {country_code}{mobile_number} Ex: 27735995564
 * `hashed_mobile_number`: String - SHA256(mobile_number)
 * `is_my_mobile_number`: bool
+* `mobile_number_verified`: bool
 * `has_consent`: bool
 * `created_at`: String - Datetime: YYYY-MM-DDTHH:mm:ss
 
