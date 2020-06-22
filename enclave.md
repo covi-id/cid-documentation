@@ -55,7 +55,7 @@ The following is the public-facing interface for frontend/backend application to
 
 `We want to acknowledge and credit Enigma/SafeTrace from which this repository is forked ` 
 
-....
+https://github.com/enigmampc/SafeTrace
 
 # Installation
 
