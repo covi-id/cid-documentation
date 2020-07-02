@@ -1,0 +1,43 @@
+title Create Wallet
+actor User
+participant WebApp
+participant API
+participant Enclave
+participant S3
+
+group Create Wallet
+User->WebApp : User inserts personal information
+
+group Key Exchange 
+WebApp->API : Request rotational key
+API->Enclave : Request rotational key
+Enclave->API : Return rotational key
+API->WebApp : Return rotational key
+end 
+
+
+WebApp->API : Encrypts wallet data and creates wallet
+API->API : Send OTP to mobile number
+API->Enclave : Pass encrypted data, otp
+API->S3: Upload image
+Enclave->API: Return status and signature
+API->WebApp :Return status and signature, message
+WebApp->User : Returns message to user
+end
+
+group Confirm OTP
+
+group Key Exchange 
+WebApp->API : Request rotational key
+API->Enclave : Request rotational key
+Enclave->API : Return rotational key
+API->WebApp : Return rotational key
+end 
+
+User->WebApp : Enters OTP
+WebApp->API: Calls mobileConfirmation(WalletId, OTP)
+API->Enclave: Sends walletId and Otp 
+Enclave->API: Return success flag and limit
+API->WebApp : Return success flag and limit
+API->User : Returns successful mobile verification to user, Displays QR to User
+end 
