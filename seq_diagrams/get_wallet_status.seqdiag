@@ -1,0 +1,22 @@
+title Get Wallet Status
+actor Verifier
+participant MobileApp
+participant API
+participant Enclave
+
+group Get Wallet Status
+
+Verifier->MobileApp : Scans QR Code
+
+group Key Exchange 
+MobileApp->API : Request rotational key
+API->Enclave : Request rotational key
+Enclave->API : Retsurn rotational key
+API->MobileApp : Return rotational key
+end
+
+MobileApp->API : Sends Encrypted payload
+Enclave->API: Return wallet status and signature
+API->MobileApp :Return status and signature, message
+MobileApp->Verifier :Displays Wallet Sttaus details
+end
